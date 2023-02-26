@@ -1,0 +1,175 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Layout.master.vb" Inherits="OnlineShop.Layout" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Leisure Magento Theme</title>
+<!--CSS-->
+<link rel="stylesheet" href="css/styles.css">
+<!-- Bootstrap 5 CSS-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!--Google Webfont -->
+<link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
+<!--Javascript-->
+<script type="text/javascript" src="js/jquery-1.7.2.min.js" ></script>
+<script type="text/javascript" src="js/jquery.flexslider.js" ></script>
+<script type="text/javascript" src="js/jquery.easing.js"></script>
+<script type="text/javascript" src="js/jquery.jcarousel.js"></script>
+<script type="text/javascript" src="js/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
+<script type="text/javascript" src="js/simpletabs_1.3.js"></script>
+<script type="text/javascript" src="js/form_elements.js" ></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+<![endif]-->
+<!-- mobile setting -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="header_container">
+        <!--Header Starts-->
+        <header>
+            <div class="top_bar clear">
+                <!--Language Switcher Starts-->
+                <div class="language_switch"> <a class="active" href="#" title="ENGLISH">EN</a> <a href="#" title="FRENCH">FR</a> </div>
+                <!--Language Switcher Ends-->
+                <!--Top Links Starts-->
+                <ul class="top_links">
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="ViewCart">Shopping Cart</a></li>
+                    <li><asp:HyperLink ID="hlLogin" runat="server" NavigateUrl="Login">Login</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="hlLogout" runat="server" NavigateUrl="Logout" Visible="false">Logout</asp:HyperLink></li>
+                    <li><a href="" id="hrefCustomer" runat="server" style="color: cyan"></a></li>
+                </ul>           
+                <!--Top Links Ends-->
+                
+            </div>
+            <!--Logo Starts-->
+            <h1 class="logo"> <a href="leisure_index.html"><img src="images/logo.png" /></a> </h1>
+            <!--Logo Ends-->
+            <!--Responsive NAV-->            <div class="responsive-nav" style="display:none;">
+                <select  onchange="if(this.options[this.selectedIndex].value != ''){window.top.location.href=this.options[this.selectedIndex].value}">
+                    <option selected="" value="">Navigate...</option>
+                    <option value="leisure_index.html"> Home</option>
+                    <option value="Item_List.aspx"> -  Listing Page</option>
+                    <option value="leisure_detail.html">Product Page</option>
+                    <option value="leisure_cart.html"> -  Shopping Cart</option>
+                    <option value="leisure_checkout.html"> -  Checkout</option>
+                    <option value="leisure_contact.php">Contact</option>
+                </select>
+            </div>
+            <!--Responsive NAV-->
+            <!--Search Starts-->
+            <div style="float: right">
+                <asp:TextBox ID="tbSearchString" CssClass="form-control" placeholder="--Search here--" runat="server"></asp:TextBox>
+                <asp:Button ID="btnSearch" CssClass="btn btn-secondary mt-1" runat="server" Text="Search" />
+            </div>
+            <!--Search Ends-->
+        </header>
+        <!--Header Ends-->
+    </div>
+        <div class="navigation_container">
+        <!--Navigation Starts-->
+        <nav>
+            <ul class="primary_nav">
+                <li><a href="Default.aspx">Home</a>
+                <li><a href="">Categories</a>
+                    <!--SUbmenu Starts-->
+                    <ul class="sub_menu">
+                        <li>
+                            <ul>
+                                <asp:SqlDataSource ID="sqlDSMainCategory" runat="server" ConnectionString="<%$ ConnectionStrings:OnlineShopConnectionString %>" SelectCommand="SELECT * FROM Category WHERE Level = 0"></asp:SqlDataSource>
+                                <asp:Repeater ID="rpMainCategory" runat="server" DataSourceID="SqlDSMainCategory">
+		                            <ItemTemplate>
+                                        <li><a href="Category-<%# CStr(Eval("CategoryId")) %>-<%# Trim(Eval("CategoryName")) %>"><%# Eval("CategoryName") %></a></li>			                        
+                                    </ItemTemplate>
+	                            </asp:Repeater> 
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--SUbmenu Ends-->
+                </li>
+                <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDSMainCategory">
+		            <ItemTemplate>
+                       <li><a href="Category-<%# CStr(Eval("CategoryId")) %>-<%# Trim(Eval("CategoryName")) %>"><%# Eval("CategoryName") %></a></li>
+			        </ItemTemplate>
+	            </asp:Repeater>
+            </ul>
+        </nav>
+        <!--Navigation Ends-->
+    </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="footer_container">
+        <!--Footer Starts-->
+        <footer>
+            <ul class="footer_links">
+                <li> <span>New Arrivals</span>
+                    <ul>
+                        <li><a href="#">Clothing</a></li>
+                        <li><a href="#">Shoes</a></li>
+                        <li><a href="#">Bags</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Zimmermann</a></li>
+                        <li><a href="#">Acne</a></li>
+                        <li><a href="#">Bassike</a></li>
+                        <li><a href="#">Camilla and Marc</a></li>
+                    </ul>
+                </li>
+                <li  class="seperator"> <span>Brands we sell</span>
+                    <ul>
+                        <li><a href="#">Elle</a></li>
+                        <li><a href="#">Reallxe</a></li>
+                        <li><a href="#">Fabric</a></li>
+                        <li><a href="#">Mayflower</a></li>
+                        <li><a href="#">Levis Strauss</a></li>
+                        <li><a href="#">Anzonica</a></li>
+                        <li><a href="#">Reallxe</a></li>
+                        <li><a href="#">Fabric</a></li>
+                    </ul>
+                </li>
+                <li> <span>Customer Service</span>
+                    <ul>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                        <li><a href="#">Order Status & Tracking</a></li>
+                        <li><a href="#">Gift Wrap Options</a></li>
+                        <li><a href="#">International Orderse</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </li>
+                <li> <span>My Account</span>
+                    <ul>
+                        <li><a href="#">My Account Information</a></li>
+                        <li><a href="#">My Password</a></li>
+                        <li><a href="#">My Order History</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                        <li><a href="#">My Address Book</a></li>
+                        <li><a href="#">My Updates & Alerts</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="footer_customblock">
+                <div class="shipping_info"> <span>introducing </span><br>
+                    <big>FREE SHIPPING</big><br>
+                    <small>for purchases above $200</small> </div>
+                <div class="contact_info"> <big>1.800. (1.800.260.7890)</big> </div>
+            </div>
+            <address>
+            Copyright © 2012 Leisure. All Rights Reserved. <img src="images/payment_info.jpg"/>
+            </address>
+        </footer>
+        <!--Footer Ends-->
+    </div>
+    </form>
+</body>
+</html>
